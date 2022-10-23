@@ -3,6 +3,8 @@ import './App.css';
 const Header = ({ courseHeader }) => { return (<h1>{courseHeader.name}</h1>) }
 
 const Course = ({ course }) => (
+
+
   <div>
     <Header courseHeader={course} />
     <ul>
@@ -12,6 +14,9 @@ const Course = ({ course }) => (
           {part.exercises}
         </li>)}
       </p>
+      total of { course.parts.reduce((s, part)=> {
+                                                  return s + part.exercises 
+                                                },0)} excersices
     </ul>
   </div>
 )
