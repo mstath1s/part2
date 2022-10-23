@@ -1,8 +1,6 @@
 import './App.css';
-import Note from './components/Note'
 
 const Header = ({ courseHeader }) => { return (<h1>{courseHeader.name}</h1>) }
-
 
 const Course = ({ course }) => (
   <div>
