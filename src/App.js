@@ -5,20 +5,28 @@ import './App.css';
 //    return (<h1>{names}</h1>) 
 //   }
 
+const TotalSum =({course}) => {
+  return ( 'total of ' +
+    course.parts.reduce((s, part) => {
+  return s + part.exercises
+}, 0)+' exercises'
+  )
+}
+
+const Parts = ({course}) =>{
+return(course.parts.map(m=><li>{m.name}{': '}
+{m.exercises}</li>))
+}
+
 const Courses = ({ courses }) => {
 
-  const names = courses.map(c=><li key={c.id}><h2>{c.name}</h2> {c.parts.map(m=><li>{m.name}{': '}
-     {m.exercises}</li>)} </li>)
+  const names = courses.map(c=><li key={c.id}><h2>{c.name}</h2> 
+  {<Parts course = {c}/>} 
+  {<TotalSum course= {c}/>} </li>)
 
   return (
   <div>  
     {names}
-    <ul>
-      {/* <p>{courseParts}</p> */}
-      {/* total of {courses.parts.reduce((s, part) => {
-        return s + part.exercises
-      }, 0)} exersices */}
-    </ul>
   </div>
   )
 }
