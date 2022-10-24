@@ -14,15 +14,38 @@ const TotalSum =({course}) => {
 }
 
 const Parts = ({course}) =>{
-return(course.parts.map(m=><li>{m.name}{': '}
-{m.exercises}</li>))
+return(course.parts.map(m =>
+<p key={m.id}>
+{m.name}{': '}
+{m.exercises}
+</p>
+
+)
+
+)
 }
 
+const Course = ({course}) => {
+  // const names = c=><li key={c.id}> 
+  // <h2>{c.name}</h2> 
+  return(
+  <li key = {course.id}>
+ {<Parts course = {course}/>} 
+{<TotalSum course= {course}/>}
+  </li>
+  // return (
+  // <div>  
+  //   {names}
+  // </div>
+  // )
+  )
+}
 const Courses = ({ courses }) => {
 
-  const names = courses.map(c=><li key={c.id}><h2>{c.name}</h2> 
-  {<Parts course = {c}/>} 
-  {<TotalSum course= {c}/>} </li>)
+  const names = courses.map(c=><ul key={c.id}> 
+  <h2>{c.name}</h2> 
+    {<Course course = {c}/>} 
+   </ul>)
 
   return (
   <div>  
