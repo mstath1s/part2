@@ -15,10 +15,15 @@ const App = () => {
     const nameObject = {
       name: newName,
     }
-  
-    setPersons(persons.concat(nameObject))
+    const inc = persons.some(n=>n.name===newName)
+    if(inc=== false){
+      
+      setPersons(persons.concat(nameObject))
+    }
+    else{console.log("exists already")}
     setNewName('')
-     
+    
+    console.log(newName,nameObject.name,persons.length)
   }
   const handleNameChange = (event) => {
     console.log(event.target.value)
