@@ -3,27 +3,37 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas'
+    {
+      name: 'Arto Hellas',
+      number:'5541708'
     }
-  ]) 
+  ])
   const [newName, setNewName] = useState('')
-  
-  
-  const addName = (event)=>{
+  const [newNumber, setNewNumber] = useState('')
+
+
+  const addName = (event) => {
     //prevent submitting html forms
     event.preventDefault()
     const nameObject = {
       name: newName,
+      number: newNumber
     }
-    const inc = persons.some(n=>n.name===newName)
-    if(inc=== false){
-      
+    const isThere = persons.some(n => n.name === newName)
+    if (isThere === false) {
+
       setPersons(persons.concat(nameObject))
     }
-    else{console.log("exists already")}
+    else {
+      console.log(`${newName} is already added to phonebook`)
+    }
     setNewName('')
-    
-    console.log(newName,nameObject.name,persons.length)
+    setNewNumber('')
+
+  }
+  const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
   }
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -32,17 +42,30 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit = {addName}>
+      <form onSubmit={addName}>
         <div>
-          name: <input value = {newName}
-                    onChange={handleNameChange}/>
+          name: <input value={newName}
+            onChange={handleNameChange} />
+        </div>
+        <div>number: <input value={newNumber}
+            onChange={handleNumberChange} />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person=>{return(<ul>{person.name}</ul>)})}
+      {
+        persons.map(
+          person => {
+            return (
+              <ul>
+                {person.name}{" "}
+                {person.number}
+              </ul>
+            )
+          })
+      }
     </div>
   )
 }
