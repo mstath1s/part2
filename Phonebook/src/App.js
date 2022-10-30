@@ -1,37 +1,9 @@
 import { useState } from 'react'
-
-const Output = ({ filtered, full, searchField }) => {
-  console.log(filtered.length)
-
-   if (searchField.length === 0)
-   {
-    return (
-    full.map(
-      person => {
-        return (
-          <ul >
-            {person.name}{" "}
-            {person.number}
-          </ul>
-        )
-      })
-    )
-   }
- return (
-  filtered.map(
-    person => {
-      return (
-        <ul >
-          {person.name}{" "}
-          {person.number}
-        </ul>
-      )
-    })
-  )
+import Persons from './components/Persons'
+import Filters from './components/Filters'
+import PersonForm from './components/PersonForm'
 
 
-
-}
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -44,7 +16,6 @@ const App = () => {
   const [newFilter, setFilter] = useState('')
   const [filteredPersons, setFilteredPersons] = useState('')
 
-
   const addName = (event) => {
     //prevent submitting html forms
     event.preventDefault()
@@ -54,22 +25,12 @@ const App = () => {
     }
     const isThere = persons.some(n => n.name === newName)
     if (isThere === false) {
-
       setPersons(persons.concat(nameObject))
     }
-    else {
-      alert(`${newName} is already added to phonebook`)
-    }
+    else { alert(` is already added to phonebook`) }
+
     setNewName('')
     setNewNumber('')
-
-  }
-
-  const searchField = (event) => {
-    //event.preventDefault()
-    // const filteredPersons = persons.filter(n => n.name.includes(newFilter))
-    //console.log(`${newFilter} is already added to`)
-
   }
 
   const handleNumberChange = (event) => {
@@ -83,48 +44,31 @@ const App = () => {
   const handleFilter = (event) => {
     console.log(event.target.value)
     setFilter(event.target.value)
-    //  searchField(event)
     const filteredPersons = persons.filter(p => {
-      // console.log(p.name)
       return p.name.toLowerCase().includes(event.target.value.toLowerCase())
     }
     )
-    setFilteredPersons(filteredPersons)
 
-    //console.log(`${filteredPersons.length} is already added to`)
+    setFilteredPersons(filteredPersons)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
       <form>
-        <div>
-          filter shown with <input value={newFilter}
-            onChange={handleFilter} />
-        </div>
-        <div>
-
-        </div>
+        <Filters newFilter={newFilter} handleFilter={handleFilter} />
       </form>
 
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName}
-            onChange={handleNameChange} />
-        </div>
-        <div>number: <input value={newNumber}
-          onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <h2>Add a new</h2>
+      <PersonForm addName={addName}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+        newName={newName}
+        newNumber={newNumber} />
 
       <h2>Numbers</h2>
-      
-      {<Output filtered={filteredPersons} full={persons} searchField={newFilter}/>}
-
-      
+      {/* Persons */}
+      {<Persons filtered={filteredPersons} full={persons} searchField={newFilter} />}
     </div >
   )
 }
