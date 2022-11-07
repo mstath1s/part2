@@ -1,20 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import Filters from './components/Filters'
 import PersonForm from './components/PersonForm'
+import axios from 'axios'
+
+// const promise = axios.get('http://localhost:3001/persons')
+
+// promise.then(response => {
+//   console.log(response)
+// })
+// axios.get('http://localhost:3001/notes').then(response => {
+//   const notes = response.data
+//   console.log(notes)
+// })
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
   const [filteredPersons, setFilteredPersons] = useState('')
+
+  const hook =() => {
+    console.log('effect')
+    axios.get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }
+
+  useEffect(hook, [])
+
+  console.log('render', persons.length, 'persons')
 
   const addName = (event) => {
     //prevent submitting html forms
