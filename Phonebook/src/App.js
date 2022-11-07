@@ -17,23 +17,35 @@ import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
+  const [countries, setCountries] = useState([])
+
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
   const [filteredPersons, setFilteredPersons] = useState('')
 
-  const hook =() => {
+  // const hook =() => {
+  //   console.log('effect')
+  //   axios.get('http://localhost:3001/persons')
+  //     .then(response => {
+  //       console.log('promise fulfilled')
+  //       setPersons(response.data)
+  //     })
+  // }
+
+  const countriesHook =() => {
     console.log('effect')
-    axios.get('http://localhost:3001/persons')
+    axios.get('https://restcountries.com/v3.1/all')
       .then(response => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setCountries(response.data)
       })
   }
 
-  useEffect(hook, [])
+  //useEffect(hook, [])
+  useEffect(countriesHook, [])
 
-  console.log('render', persons.length, 'persons')
+  console.log('render', countries.length, 'countries')
 
   const addName = (event) => {
     //prevent submitting html forms
@@ -53,15 +65,15 @@ const App = () => {
   }
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewNumber(event.target.value)
   }
   const handleNameChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewName(event.target.value)
   }
   const handleFilter = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setFilter(event.target.value)
     const filteredPersons = persons.filter(p => {
       return p.name.toLowerCase().includes(event.target.value.toLowerCase())
